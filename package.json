@@ -1,0 +1,19 @@
+{
+  "name": "webrtc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^13.0.0",
+    "get-browser-rtc": "^1.0.2",
+    "signalhub": "^4.3.2",
+    "simple-peer": "^6.0.3"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
