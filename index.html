@@ -5,8 +5,18 @@
         width: 600px;
         word-wrap: break-word;
       }
+      #local {
+        width: 200px;
+        border: 1px dotted red;
+      }
+      #peer {
+        width: 400px;
+        border: 1px dotted blue;
+      }
     </style>
-    <video id="video"></video>
+    <h1 id="title">webrtc demo</h1>
+    <video id="peer"></video>
+    <video id="local"></video>
     <pre id="outgoing"></pre>
     <script src="bundle.js"></script>
   </body>
