@@ -1,5 +1,6 @@
 var signalhub = require('signalhub');
 var Peer = require('simple-peer')
+var RecordRTC = require('recordrtc')
 var hub = signalhub('signaling-app', ['http://localhost:9970']);
 
 // application state
@@ -11,7 +12,7 @@ function logState() {
     console.log('--- END STATE ---')
 }
 
-//get video/voice
+// Get video/voice, then call main function
 navigator.webkitGetUserMedia({ video: true, audio: false }, gotMedia, console.error);
 
 function gotMedia(stream) {
@@ -47,25 +48,27 @@ function gotMedia(stream) {
     hub.broadcast('signaling-app', {name: name, msg: data});
   })
 
+  // Incoming data form peer data channel
   p.on('data', function (data) {
    console.log('data: ' + data);
   })
 
+  // New peer connects: peer connection and data channel are ready to use
   p.on('connect', function () {
-    console.log('CONNECT: peer connection and data channel are ready to use');
+    console.log('CONNECT');
     p.send('whatever' + Math.random());
   })
 
+  // New media stream from peer
   p.on('stream', function (mediaStream) {
     console.log('STREAM: Received a remote video stream, which can be displayed in a video tag');
     var video = document.querySelector('video#peer');
+    video.src = window.URL.createObjectURL(mediaStream)
     // allow selecting this stream
     video.onclick=function() {
       console.log('local video clicked')
       state.focus.video = 'peer'
       logState()
     }
-    video.src = window.URL.createObjectURL(mediaStream)
   });
-
 }
