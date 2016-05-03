@@ -1,6 +1,16 @@
 var signalhub = require('signalhub');
 var Peer = require('simple-peer')
 var hub = signalhub('signaling-app', ['http://localhost:9970']);
+
+// application state
+var state = {focus:{video:''}}
+function logState() {
+    console.log('--- BEGIN STATE ---')
+    console.log('state', state)
+    console.log('video focus', state.focus.video)
+    console.log('--- END STATE ---')
+}
+
 //get video/voice
 navigator.webkitGetUserMedia({ video: true, audio: false }, gotMedia, console.error);
 
@@ -8,6 +18,11 @@ function gotMedia(stream) {
   // set up local video first
   var video = document.querySelector('video#local');
   video.src = window.URL.createObjectURL(stream);
+  // allow selecting this stream
+  video.onclick=function() {
+    state.focus.video = 'local'
+    logState()
+  }
 
   var p = new Peer({ initiator: location.hash === '#1', stream: stream, trickle: false })
   var name = "peer " + Math.random();
@@ -44,6 +59,12 @@ function gotMedia(stream) {
   p.on('stream', function (mediaStream) {
     console.log('STREAM: Received a remote video stream, which can be displayed in a video tag');
     var video = document.querySelector('video#peer');
+    // allow selecting this stream
+    video.onclick=function() {
+      console.log('local video clicked')
+      state.focus.video = 'peer'
+      logState()
+    }
     video.src = window.URL.createObjectURL(mediaStream)
   });
 
