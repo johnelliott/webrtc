@@ -1,6 +1,5 @@
 var signalhub = require('signalhub');
 var Peer = require('simple-peer')
-var RecordRTC = require('recordrtc')
 var hub = signalhub('signaling-app', ['http://localhost:9970']);
 
 // application state
@@ -20,6 +19,7 @@ function gotMedia(stream) {
   var video = document.querySelector('video#local');
   video.src = window.URL.createObjectURL(stream);
   // allow selecting this stream
+  //https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
   video.onclick=function() {
     state.focus.video = 'local'
     logState()
@@ -65,6 +65,7 @@ function gotMedia(stream) {
     var video = document.querySelector('video#peer');
     video.src = window.URL.createObjectURL(mediaStream)
     // allow selecting this stream
+    //https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
     video.onclick=function() {
       console.log('local video clicked')
       state.focus.video = 'peer'

@@ -1,5 +1,4 @@
 var RecordRTC = require('recordrtc')
-var fetch = require('isomorphic-fetch')
 
 // chrome only...
 var getUserMedia = navigator.webkitGetUserMedia
